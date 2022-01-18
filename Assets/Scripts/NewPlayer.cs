@@ -1,17 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NewPlayer : PhysicsObject
 {
-    [SerializeField] private float maxSpeed = 1;
-    [SerializeField] private float jumpPower = 10;
+    [SerializeField] private float maxSpeed;
+    [SerializeField] private float jumpPower;
     private SpriteRenderer playerSprite;
+    public int coinsCollected;
+
+    public Text coinsText;
 
     // Start is called before the first frame update
     void Start()
     {
         playerSprite = GetComponent<SpriteRenderer>();
+
+        coinsText = GameObject.Find("Coins").GetComponent<Text>();
         
     }
 
@@ -37,5 +43,12 @@ public class NewPlayer : PhysicsObject
             playerSprite.flipX = false;
         }
     
+    }
+    //Update UI element
+    public void UpdateUI()
+    {
+        //Converts the coinsCollected integer to a string and assigns that string to the text component of the CoinsUI object.
+        coinsText.text = coinsCollected.ToString();
+        
     }
 }
