@@ -76,6 +76,7 @@ public class PhysicsObject : MonoBehaviour
             int count = rb2d.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
             hitBufferList.Clear();
 
+            // Prevents bumping against the bottom of platforms 
             for (int i = 0; i < count; i++)
             {
                 PlatformEffector2D platform = hitBuffer[i].collider.GetComponent<PlatformEffector2D>();

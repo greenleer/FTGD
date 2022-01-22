@@ -5,29 +5,43 @@ using UnityEngine.UI;
 
 public class NewPlayer : PhysicsObject
 {
+   
     [SerializeField] private float maxSpeed;
     [SerializeField] private float jumpPower;
-    private SpriteRenderer playerSprite;
-    public int coinsCollected;
 
+    private SpriteRenderer playerSprite;
+
+    public int coinsCollected;
     public Text coinsText;
+    public int ammo;
+
+    public Dictionary<string, Sprite> inventory = new Dictionary<string, Sprite>();
+    public Image inventoryItemImage;
+
+    public int maxHealth = 100;
+    public int health;
+    public Image healthBar;
+    [SerializeField] private Vector2 healthBarOrigSize;
 
     // Start is called before the first frame update
     void Start()
     {
         playerSprite = GetComponent<SpriteRenderer>();
 
-        coinsText = GameObject.Find("Coins").GetComponent<Text>();
-        
+        health = 100;
+        healthBarOrigSize = healthBar.rectTransform.sizeDelta;
+
+        UpdateUI();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Moves the player along the X axis, based on player input
+        // Moves player along horizontal axis
         targetVelocity = new Vector2(Input.GetAxis("Horizontal") * maxSpeed, 0);
 
-        // If the player presses "Jump", and the player is grounded, set the Y velocity to a jump power value, and flip the sprite upside down.
+        // Controls player jump
         if (Input.GetButtonDown("Jump") && grounded)
         {
             velocity.y = jumpPower;
@@ -47,8 +61,16 @@ public class NewPlayer : PhysicsObject
     //Update UI element
     public void UpdateUI()
     {
-        //Converts the coinsCollected integer to a string and assigns that string to the text component of the CoinsUI object.
+        // Updates the Text UI to match coins collected
         coinsText.text = coinsCollected.ToString();
-        
+
+        //Adjusts health bar width based on the percentage of current health compared to maxhealth
+        healthBar.rectTransform.sizeDelta = new Vector2(healthBarOrigSize.x * ((float)health / maxHealth), healthBar.rectTransform.sizeDelta.y);
+    }
+
+    public void AddInventoryItem(string inventoryName, Sprite image)
+    {
+        inventory.Add(inventoryName, image);
+        inventoryItemImage.sprite = inventory[inventoryName];
     }
 }
