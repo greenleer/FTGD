@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
-    // Creates a enumeration of collectable item types called Item Type
+    // Creates a enumeration of collectable item types
     enum ItemType { Coin, Health, Ammo, Inventory }
+
+    // Provides Unity editor access to the ItemType enum within
     [SerializeField] private ItemType itemType;
 
-    // Instatiates a NewPlayer class for the sake of accessing the NewPlayer script.
-    private NewPlayer newPlayer;
+    [SerializeField] private string inventoryStringName;
+    [SerializeField] private Sprite inventorySprite;
 
     // Start is called before the first frame update
     void Start()
     {
-        newPlayer = GameObject.Find("Player").GetComponent<NewPlayer>();
         
     }
 
@@ -31,26 +32,33 @@ public class Collectable : MonoBehaviour
         {
            if (itemType == ItemType.Coin)
             {
-                newPlayer.coinsCollected += 1;
+                // Increments coinsCollected within the newPlayer script
+                NewPlayer.Instance.coinsCollected += 1;
             }
            else if (itemType == ItemType.Health)
             {
-                if (newPlayer.health < 100)
+                // Increments health within the newPlayer script, if the value is less than 100
+                if (NewPlayer.Instance.health < 100)
                 {
-                    newPlayer.health += 1;
+                    NewPlayer.Instance.health += 10;
                 }
             }
            else if (itemType == ItemType.Ammo)
             {
-                newPlayer.ammo += 1;
+                // Increments ammo within the newPlayer script
+                NewPlayer.Instance.ammo += 1;
             }
            else
             {
-                newPlayer.AddInventoryItem(gameObject.name, gameObject.GetComponent<SpriteRenderer>().sprite);
-                Debug.Log(gameObject.name);
+                // Passes the collectible name, and sprite to the AddInventoryItem function in the newPlayer script
+                NewPlayer.Instance.AddInventoryItem(inventoryStringName, inventorySprite);
             }
-            newPlayer.UpdateUI();
-            Destroy(gameObject);
+
+            // Updates the UI elements in the newPlayer script, based on interaction with collectable
+            NewPlayer.Instance.UpdateUI();
+
+           // Destroys the collectable game object for the sake of housekeeping
+           Destroy(gameObject);
         }
     }
 }
