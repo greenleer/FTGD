@@ -21,6 +21,8 @@ public class Enemy : PhysicsObject
     [SerializeField] private LayerMask raycastLayerMask;
 
     [SerializeField] private int attackPower;
+    public int enemyHealth = 100;
+    [SerializeField] private int maxEnemyHealth = 100;
 
     // Start is called before the first frame update
     void Start()
@@ -59,6 +61,12 @@ public class Enemy : PhysicsObject
         if (leftLedgeRaycastHit.collider == null || leftWallRaycastHit.collider != null)
         {
             direction = 1;
+        }
+
+        //Destroy me if my health falls to 0;
+        if (enemyHealth <= 0)
+        {
+            Destroy(gameObject);
         }
     }
     //If I collide with the player, deal damage, and update the Health UI.

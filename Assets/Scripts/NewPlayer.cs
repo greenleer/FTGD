@@ -5,9 +5,12 @@ using UnityEngine.UI;
 
 public class NewPlayer : PhysicsObject
 {
-    // Physics -- running and jumping
+    // Physics -- running, jumping, attacking
     [SerializeField] private float maxSpeed;
     [SerializeField] private float jumpPower;
+    [SerializeField] private GameObject attackBox;
+    [SerializeField] private float attackDuration;
+    public int attackPower = 25;
 
     // Reference to the sprite dedicated to the player object
     private SpriteRenderer playerSprite;
@@ -72,18 +75,30 @@ public class NewPlayer : PhysicsObject
         }
 
         // Flip the orientation of the sprite if the player moves to the left.
-        if (Input.GetAxis("Horizontal") < 0)
+        if (targetVelocity.x < -.01)
         {
-            playerSprite.flipX = true;
+            transform.localScale = new Vector2(-1, 1);
+        } else if (targetVelocity.x > .01)
+        {
+            transform.localScale = new Vector2(1, 1);
         }
 
-        // Utilize default sprite orientation if the player moves to the right.
-        if (Input.GetAxis("Horizontal") > 0)
+        //If we press Fire1, activate the attack box, otherwise leave deactivated.
+        if (Input.GetButtonDown("Fire1"))
         {
-            playerSprite.flipX = false;
+            StartCoroutine(ActivateAttack());
         }
-    
     }
+
+    // Activate attack function
+    public IEnumerator ActivateAttack()
+    {
+        attackBox.SetActive(true);
+        yield return new WaitForSeconds(attackDuration);
+        attackBox.SetActive(false);
+    }
+
+
     //Updates UI elements
     public void UpdateUI()
     {
