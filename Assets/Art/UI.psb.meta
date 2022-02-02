@@ -98,8 +98,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 282
-      y: 91
+      x: 4
+      y: 675
       width: 130
       height: 131
     spriteID: b7072f1fa594c4f44b759fa9024d6932
@@ -112,7 +112,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: -2593, y: -693}
+    uvTransform: {x: -2871, y: -109}
   - name: GoldKey
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -121,7 +121,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 91
+      y: 397
       width: 131
       height: 131
     spriteID: 0f20d96f958f14e3eaae22e70421eaa1
@@ -134,7 +134,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: -2488, y: -693}
+    uvTransform: {x: -2488, y: -387}
   - name: InventoryBlank
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -142,8 +142,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 143
-      y: 91
+      x: 4
+      y: 536
       width: 131
       height: 131
     spriteID: fb7fc14cdc47a4022a68140a3c82ca09
@@ -156,7 +156,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: -1160, y: -738}
+    uvTransform: {x: -1299, y: -293}
   - name: HealthBar
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -186,8 +186,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 420
-      y: 91
+      x: 143
+      y: 397
       width: 90
       height: 90
     spriteID: e10b54b7e06024fdbbdf15aec4102e28
@@ -200,7 +200,29 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: -1081, y: -1274}
+    uvTransform: {x: -1358, y: -968}
+  - name: Enemy
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 91
+      width: 251
+      height: 298
+    spriteID: cc2fd479af748495db6ccfda366936ba
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -1994, y: -1430}
   platformSettings: []
   mosaicLayers: 1
   documentPivot: {x: 0, y: 0}
@@ -220,27 +242,34 @@ ScriptedImporter:
   characterMode: 1
   mosaicPSDLayers: []
   rigPSDLayers:
+  - name: Enemy
+    spriteName: Enemy
+    isGroup: 0
+    parentIndex: -1
+    spriteID: cc2fd479af748495db6ccfda366936ba
+    layerID: 6
+    mosaicPosition: {x: 4, y: 91}
   - name: BlueKey
     spriteName: BlueKey
     isGroup: 0
     parentIndex: -1
     spriteID: b7072f1fa594c4f44b759fa9024d6932
     layerID: 5
-    mosaicPosition: {x: 282, y: 91}
+    mosaicPosition: {x: 4, y: 675}
   - name: GoldKey
     spriteName: GoldKey
     isGroup: 0
     parentIndex: -1
     spriteID: 0f20d96f958f14e3eaae22e70421eaa1
     layerID: 4
-    mosaicPosition: {x: 4, y: 91}
+    mosaicPosition: {x: 4, y: 397}
   - name: InventoryBlank
     spriteName: InventoryBlank
     isGroup: 0
     parentIndex: -1
     spriteID: fb7fc14cdc47a4022a68140a3c82ca09
     layerID: 3
-    mosaicPosition: {x: 143, y: 91}
+    mosaicPosition: {x: 4, y: 536}
   - name: HealthBar
     spriteName: HealthBar
     isGroup: 0
@@ -254,7 +283,7 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: e10b54b7e06024fdbbdf15aec4102e28
     layerID: 1
-    mosaicPosition: {x: 420, y: 91}
+    mosaicPosition: {x: 143, y: 397}
   characterData:
     bones: []
     parts: []
