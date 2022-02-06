@@ -24,7 +24,6 @@ public class AttackBox : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<Enemy>())
         {
-            Debug.Log("Enemy punched!");
             collision.GetComponent<Enemy>().enemyHealth -= NewPlayer.Instance.attackPower;
         }
     }

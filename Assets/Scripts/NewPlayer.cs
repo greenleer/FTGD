@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class NewPlayer : PhysicsObject
@@ -12,25 +13,17 @@ public class NewPlayer : PhysicsObject
     [SerializeField] private float attackDuration;
     public int attackPower = 25;
 
-    // Reference to the sprite dedicated to the player object
-    private SpriteRenderer playerSprite;
-
-    // Coin collection tracking, and the UI text that displays it
+    // Collectables tracking
     public int coinsCollected;
-    public Text coinsText;
-
-    // Ammo collection tracking, and the UI text that displays is
     public int ammo;
 
     // Inventory Dictionary that contains the inventory name and sprite, and the UI image to display it.
     public Dictionary<string, Sprite> inventory = new Dictionary<string, Sprite>();
-    public Image inventoryItemImage;
-    public Sprite InventoryItemBlank;
+    
 
-    // Health tracking, UI elements, and the Vector2 that represents 100% health bar size.
+    // Health tracking
     public int maxHealth = 100;
     public int health;
-    public Image healthBar;
     [SerializeField] private Vector2 healthBarOrigSize;
 
     //Player Singleton instatiation
@@ -44,21 +37,28 @@ public class NewPlayer : PhysicsObject
         }
     }
 
+    private void Awake()
+    {
+        if (GameObject.Find("New Player"))
+        {
+            Destroy(gameObject);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        playerSprite = GetComponent<SpriteRenderer>();
-        /*
-        // Sets player health to 100;
-        health = 100;
-        */
+        DontDestroyOnLoad(gameObject);
+
+        gameObject.name = "New Player";
 
         // Sets health bar original Vector2 size.
-        healthBarOrigSize = healthBar.rectTransform.sizeDelta;
+        healthBarOrigSize = GameManager.Instance.healthBar.rectTransform.sizeDelta;
 
-        // Updates UI -- primarily to reflect 100 health at start.
+        // Updates UI: health, coins inventory.
         UpdateUI();
+
+        SetSpawnPosition();
 
     }
 
@@ -78,15 +78,21 @@ public class NewPlayer : PhysicsObject
         if (targetVelocity.x < -.01)
         {
             transform.localScale = new Vector2(-1, 1);
-        } else if (targetVelocity.x > .01)
+        }
+        else if (targetVelocity.x > .01)
         {
             transform.localScale = new Vector2(1, 1);
         }
 
-        //If we press Fire1, activate the attack box, otherwise leave deactivated.
+        //Activates the attack box, when "Fire1" input is pressed, otherwise leaves deactivated.
         if (Input.GetButtonDown("Fire1"))
         {
             StartCoroutine(ActivateAttack());
+        }
+
+        if (health <= 0)
+        {
+            Die();
         }
     }
 
@@ -103,22 +109,43 @@ public class NewPlayer : PhysicsObject
     public void UpdateUI()
     {
         // Updates the Text UI to match coins collected
-        coinsText.text = coinsCollected.ToString();
+        GameManager.Instance.coinsText.text = coinsCollected.ToString();
 
         //Adjusts health bar width based on the percentage of current health compared to maxhealth
-        healthBar.rectTransform.sizeDelta = new Vector2(healthBarOrigSize.x * ((float)health / maxHealth), healthBar.rectTransform.sizeDelta.y);
+        GameManager.Instance.healthBar.rectTransform.sizeDelta = new Vector2(healthBarOrigSize.x * ((float)health / maxHealth), GameManager.Instance.healthBar.rectTransform.sizeDelta.y);
+    }
+
+    public void SetSpawnPosition()
+    {
+        transform.position = GameObject.Find("SpawnLocation").transform.position;
     }
 
     // Updates the Inventory UI image associated with the active collected inventory item.
     public void AddInventoryItem(string inventoryName, Sprite image = null)
     {
         inventory.Add(inventoryName, image);
-        inventoryItemImage.sprite = inventory[inventoryName];
+        GameManager.Instance.inventoryItemImage.sprite = inventory[inventoryName];
     }
 
     public void RemoveInventoryItem(string inventoryName)
     {
         inventory.Remove(inventoryName);
-        inventoryItemImage.sprite = InventoryItemBlank;
+        GameManager.Instance.inventoryItemImage.sprite = GameManager.Instance.InventoryItemBlank;
+    }
+
+    //Reload Level1 scene when the Die function is called.
+    public void Die()
+    {
+        // reload the active scene
+        string sceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+
+        // reset player health, coins collected, spawn position, UI, and inventory
+        health = maxHealth;
+        coinsCollected = 0;
+        inventory.Clear(); // this clears the dictionary
+        GameManager.Instance.inventoryItemImage.sprite = GameManager.Instance.InventoryItemBlank;
+        UpdateUI();
+        SetSpawnPosition();
     }
 }

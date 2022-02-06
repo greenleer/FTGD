@@ -24,10 +24,12 @@ public class Enemy : PhysicsObject
     public int enemyHealth = 100;
     [SerializeField] private int maxEnemyHealth = 100;
 
+    private SpriteRenderer enemySprite;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        enemySprite = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -55,12 +57,15 @@ public class Enemy : PhysicsObject
         if (rightLedgeRaycastHit.collider == null || rightWallRaycastHit.collider != null)
         {
             direction = -1;
+            enemySprite.flipX = true;
+
         }
 
         //left raycast debug
         if (leftLedgeRaycastHit.collider == null || leftWallRaycastHit.collider != null)
         {
             direction = 1;
+            enemySprite.flipX = false;
         }
 
         //Destroy me if my health falls to 0;

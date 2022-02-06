@@ -28,7 +28,7 @@ public class Collectable : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Determines if the player touches the collectable
-        if (collision.gameObject.name == "Player")
+        if (collision.gameObject == NewPlayer.Instance.gameObject)
         {
            if (itemType == ItemType.Coin)
             {

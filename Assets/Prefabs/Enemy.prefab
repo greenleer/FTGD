@@ -142,3 +142,6 @@ MonoBehaviour:
   raycastLayerMask:
     serializedVersion: 2
     m_Bits: 51
+  attackPower: 2
+  enemyHealth: 100
+  maxEnemyHealth: 100
